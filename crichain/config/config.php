@@ -11,7 +11,7 @@ class config
 
     //合约接口域名
     const DOMAIN_TEST = 'http://test.open-api.crichain.cn'; //测试环境
-    const DOMAIN = 'http://openapi.crichain.cn';  //正式环境
+    const DOMAIN = 'https://openapi.crichain.cn';  //正式环境
 
     //合约接口地址
     const CURL_CONF = [
