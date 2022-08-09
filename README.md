@@ -2,7 +2,7 @@
 
 # Install
 ```
-composer require sound/sound-sdk-php-demo dev-master
+composer require sound/sound-sdk-php-demo
 ```
 # Usage
 
@@ -19,9 +19,9 @@ use crichain\Creator;
 
 /**
  * 签名
- * 
+ *
  * @param string $privateKey 私钥
- * @param string $msg 签名文本
+ * @param string $msg
  * @return string
  * @throws Exception
  */
@@ -32,9 +32,10 @@ $sign = Creator::sign($keyPair['privateKey'], '123');
 use crichain\Caller;
 
 /**
- * 获取账户信息
- * 
+ * 获取账号信息
+ *
  * @param string $address 地址
+ * @return array
  * @throws Exception
  */
 $accountInfo = Caller::getAccountInfo($keyPair['address']);
@@ -45,18 +46,20 @@ $accountInfo = Caller::getAccountInfo($keyPair['address']);
 use crichain\Caller;
 
 /**
- * 实例化Caller类
- * 
+ * construct
+ *
  * @param string $privateKey 私钥
  * @param string $nftType NFT配置，默认为NFT_A
+ * @throws Exception
  */
 $caller = new Caller($keyPair['privateKey']);
 
 /**
  * 转账
- * 
+ *
  * @param string $to 转入地址
  * @param string $amount 转账金额
+ * @return array|mixed
  * @throws Exception
  */
 $res = $caller->safeTransfer('转入地址', '0.01');

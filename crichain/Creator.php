@@ -32,7 +32,7 @@ class Creator
      * 签名
      *
      * @param string $privateKey 私钥
-     * @param string $msg 签名文本
+     * @param string $msg
      * @return string
      * @throws Exception
      */

@@ -45,6 +45,8 @@ class Caller
         if (!$privateKey) {
             throw new Exception('私钥不能为空');
         }
+        $this->privateKey = $privateKey;
+
         //abi实例
         $fileName = __DIR__ . '/config/' . $nftType . '.json';
         $contractMeta = json_decode(file_get_contents($fileName));
@@ -59,16 +61,14 @@ class Caller
             'string' => new Types\Str,
             'uint' => new Types\Uinteger,
         ]);
-
-        $this->privateKey = $privateKey;
     }
-
 
     /**
      * 转账
      *
      * @param string $to 转入地址
      * @param string $amount 转账金额
+     * @return array|mixed
      * @throws Exception
      */
     public function safeTransfer(string $to, string $amount)
@@ -82,6 +82,7 @@ class Caller
 
         //转出地址
         $from = self::getAddressByPrivateKey($this->privateKey);
+
         $txBody = new TransactionBody();
         $nonce = self::getNonce($from);
         $txBody->setNonce($nonce);
@@ -166,6 +167,7 @@ class Caller
      * 获取账号信息
      *
      * @param string $address 地址
+     * @return array
      * @throws Exception
      */
     static public function getAccountInfo(string $address): array
