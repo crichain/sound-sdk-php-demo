@@ -1,0 +1,26 @@
+syntax = "proto3";
+option go_package="./abi/test.proto";
+package template;
+
+message TransactionBody {
+  int64 nonce = 1;
+  bytes address = 2;
+  //	repeated TransactionOutput outputs = 3;
+  bytes recipient = 3;
+  bytes	amount = 4;
+  bytes fees = 5;//手续费高位
+  int32 inner_codetype = 6; //内置指令交易[0=普通交易,1=多重签名交易(取消),2=类ETH交易，，3=RC721交易(取消)，4=XVM合约调用,5=JSVM合约调用(暂无),6=evfs交易,7=链委员会(暂无),8=链管理员组(暂无)
+  bytes code_data = 7; //指令数据
+  bytes ext_data = 8;
+  int64 timestamp = 9;
+  bytes biz_code = 10; //业务代码
+  bytes version = 11; //版本
+  int32 chainId = 12;
+  bytes to = 20;
+}
+message TransactionInfo {
+  bytes hash = 1;
+  TransactionBody body = 2;
+  bytes signature = 3;
+
+}

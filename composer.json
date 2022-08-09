@@ -1,0 +1,31 @@
+{
+    "name": "sound/sound-sdk-php-demo",
+    "description": "sound-sdk-php",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "crichain\\": "crichain",
+            "GPBMetadata\\": "crichain/protobuf/GPBMetadata",
+            "Template\\": "crichain/protobuf/Template",
+            "Ethereum\\": "crichain/libs/Ethereum"
+        }
+    },
+    "authors": [
+        {
+            "name": "matzoh",
+            "email": "eaterlow@gmail.com"
+        }
+    ],
+    "require": {
+        "phpseclib/phpseclib": "~2.0",
+        "simplito/elliptic-php": "^1.0",
+        "sc0vu/web3.php": "^0.1.4",
+        "google/protobuf": "^3.21",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "monolog/monolog": "^2.8",
+        "ext-bcmath": "*",
+        "kornrunner/keccak": "^1.1",
+        "pear/math_biginteger": "^1.0"
+    }
+}
