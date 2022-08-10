@@ -2,6 +2,7 @@
     "name": "sound/sound-sdk-php-demo",
     "description": "sound-sdk-php",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "crichain\\": "crichain",
@@ -11,6 +12,10 @@
         }
     },
     "authors": [
+        {
+            "name": "yaoxiangxi",
+            "email": "yaoxiangxi09@163.com"
+        },
         {
             "name": "matzoh",
             "email": "eaterlow@gmail.com"
