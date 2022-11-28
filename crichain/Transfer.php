@@ -38,10 +38,11 @@ class Transfer {
      *
      * @param string $to 转入地址
      * @param string $amount 转账金额
+     * @param int $nonce 交易 nonce
      * @return array|mixed
      * @throws Exception
      */
-    public function safeTransfer(string $to, string $amount)
+    public function safeTransfer(string $to, string $amount, int $nonce = 0)
     {
         if (!$to) {
             throw new Exception('转入地址不能为空');
@@ -54,8 +55,7 @@ class Transfer {
         $from = Caller::getAddressByPrivateKey($this->privateKey);
 
         $txBody = new TransactionBody();
-        $nonce = Caller::getNonce($from);
-        $txBody->setNonce($nonce);
+        $txBody->setNonce($nonce ?: Caller::getNonce($from));
         $txBody->setAddress(Utils::hexToBin($from));
         $txBody->setRecipient(Utils::hexToBin($to));
         $txBody->setChainId(config::CHAIN_ID);

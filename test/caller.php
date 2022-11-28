@@ -25,6 +25,13 @@ class testCase {
         var_dump($r); die;
     }
 
+    //调用合约，手动传入 Nonce
+    public function callContractManual($privateKey, $contractAddress, $method, $params, $nonce) {
+        $caller = new Caller($privateKey);
+        $r = $caller->callContractManual($contractAddress, $method,$params,Functions::createOperateId(), $nonce);
+        var_dump($r); die;
+    }
+
 }
 
 //测试钱包私钥

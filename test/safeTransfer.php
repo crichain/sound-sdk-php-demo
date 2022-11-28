@@ -13,4 +13,6 @@ $to = '';
 
 $transfer = new \crichain\Transfer($privateLey);
 $res = $transfer->safeTransfer($to, '0.2');
+//$res = $transfer->safeTransfer($to, '0.2', 10); // 手动传入 nonce
 var_dump($res); die;
+

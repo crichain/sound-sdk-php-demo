@@ -61,6 +61,8 @@ class Caller
             'string' => new Types\Str,
             'uint' => new Types\Uinteger,
         ]);
+
+        $this->privateKey = $privateKey;
     }
 
     /**
@@ -74,6 +76,32 @@ class Caller
      * @throws Exception
      */
     public function callContract(string $contractAddress, string $method, array $params, string $operateId = "")
+    {
+        return $this->_callContract($contractAddress, $method, $params, $operateId);
+    }
+
+    /**
+     * 调用合约
+     * 手动，可传入指定nonce
+     *
+     * @param string $contractAddress 合约地址
+     * @param string $method 合约方法名, 详情见config/NFT_A.json
+     * @param array $params 合约参数数组 ['xxxxx','xxxx','xxxxx'], 详情见config/NFT_A.json, 参数顺序必须与配置中的一致
+     * @param string $operateId 操作ID
+     * @param int $nonce
+     * @return array|mixed
+     * @throws Exception
+     */
+    public function callContractManual(string $contractAddress, string $method, array $params, string $operateId = "", int $nonce = 0)
+    {
+        return $this->_callContract($contractAddress, $method, $params, $operateId, $nonce);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    private function _callContract(string $contractAddress, string $method, array $params, string $operateId = "", int $nonce = 0)
     {
         if (!$contractAddress || !$method) {
             throw new Exception('参数错误');
@@ -95,7 +123,7 @@ class Caller
 
         //获取txData
         if ($methodType == 'tx') {
-            $txData = $this->getTxData($methodSignature, $contractAddress);
+            $txData = $this->getTxDataManual($methodSignature, $contractAddress, $nonce);
             $callParams['data'] = $txData;
         }
         ($methodType == 'view') && $callParams['params'] = $params;
@@ -191,10 +219,40 @@ class Caller
      */
     private function getTxData($methodSignature, $contractAddress): string
     {
+        return $this->buildTxData($methodSignature, $contractAddress);
+    }
+
+    /**
+     * 生成txData
+     * 手动，可传入nonce
+     *
+     * @param $methodSignature
+     * @param $contractAddress
+     * @param $nonce
+     * @return string
+     * @throws Exception
+     */
+    private function getTxDataManual($methodSignature, $contractAddress, $nonce) {
+        return $this->buildTxData($methodSignature, $contractAddress, $nonce);
+    }
+
+    /**
+     * 构建交易体
+     * User: <eaterlow@gmail.com>
+     * Date: 2022/11/28
+     * Time: 14:21
+     * @param $methodSignature
+     * @param $contractAddress
+     * @param $nonce
+     * @return string
+     * @throws Exception
+     */
+    private function buildTxData($methodSignature, $contractAddress, $nonce): string
+    {
         $txBody = new TransactionBody();
         $address = self::getAddressByPrivateKey($this->privateKey);
         $txBody->setAddress(Utils::hexToBin($address));
-        $txBody->setNonce(self::getNonce($address));
+        $txBody->setNonce(($nonce ?: self::getNonce($address)));
         $txBody->setChainId(config::CHAIN_ID);
         $txBody->setVersion(Utils::hexToBin(Utils::toHex(config::VERSION)));
         $txBody->setTimestamp(Functions::mtime());
