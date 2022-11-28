@@ -62,6 +62,8 @@ $transfer = new Transfer($keyPair['privateKey']);
  * @throws Exception
  */
 $res = $transfer->safeTransfer('转入地址', '0.01');
+//$res = $transfer->safeTransfer('转入地址', '0.01', 10); // 手动传入 nonce
+
 ```
 
 ### 调用合约
